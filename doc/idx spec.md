@@ -1,6 +1,14 @@
 
 
 
+
+
+# idx can use cache timer tsk to prcs..
+
+
+##
+
+
 add del add idx...
 
 updt (add del)

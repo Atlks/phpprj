@@ -1,5 +1,21 @@
 
 
+
+# tp routr mode
+
+
+
+include    __DIR__."/../mod/act2.php";
+use think\facade\Route;
+
+Route::get('/act2', function () {
+return 'act2!!';
+});
+
+
+
+# fl mode 
+
 add   /callfl?f=xxx
 
 

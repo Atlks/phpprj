@@ -1,49 +1,49 @@
 <?php
 
+
+use think\facade\Cache;
+
 t();
 function t()
-{
-    $CollStorepath = "db/col1";
+{   $CollStorepath = "db/col1";
 
-    $startms=getMillisecond();
-   // echo $startms;
+
+
+
+
+
+    require __DIR__ . '/../vendor/autoload.php';
+// 应用初始化导入tp类库
+    $app = new \think\App();
+    ($app)->console;
+
+
+    $startms = getMillisecond();
+    // echo $startms;
     //select from xxx where xxx
-    $rows = qry($CollStorepath, function ($jsonobj) {
+    $rows = Cache::remember('game_id=666', function () use ($CollStorepath) {
 
-        if ($jsonobj['game_id'] == '777')
-            return true;
+        $rows203 = qry($CollStorepath, function ($jsonobj) {
 
+            if ($jsonobj['game_id'] == 666)
+                return true;
+
+        });
+        return json_encode($rows203);
     });
+
+
     print_r($rows);
-    echo getMillisecond()-$startms;
+    echo getMillisecond() - $startms;
     echo "ms";
     die();
 
 
-
-
 //   date('Y-m-d His.u')  only sec lev
-    for($i=1;$i<10000;$i++)
-    {
-        $d = new \DateTime();
-        $rule = [
-            'id' => $d->format( 'Y-m-d His.u' ),
-            'game_id' =>  $i,                                     //游戏ID
-            'game_room_ids' => 'array'];
-          add($rule, $CollStorepath);
-    }
-    die();
-
-
-
-
 
 
 
     //file_put_contents("")
-
-
-
 
 
 //del("2024-03-06 133704",$dbStorepath);
@@ -59,7 +59,24 @@ function t()
 
 
 
-function getMillisecond() {
+function testAdd()
+{$CollStorepath = "db/col1";
+    //--------add
+    for ($i = 1; $i < 10*10000; $i++) {
+        $d = new \DateTime();
+        $rule = [
+            'id' => $d->format('Y-m-d His.u'),
+            'game_id' => $i,                                     //游戏ID
+            'game_room_ids' => 'array'];
+        add($rule, $CollStorepath);
+    }
+    die();
+    //finish add
+
+}
+// -------------------------------------lib
+function getMillisecond()
+{
     list($s1, $s2) = explode(' ', microtime());
     return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
 }
@@ -112,7 +129,7 @@ function qry($coll_store_postn, $whereFun)
     foreach ($files as $file) {
 //    if (is_file($file)) {  //判断是否是文件
 //        echo $file . ‘
-
+         var_dump($file);
         $txt = file_get_contents($file);
         $jsonobj = json_decode($txt, true);
         if ($whereFun($jsonobj))

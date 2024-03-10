@@ -3,14 +3,15 @@
 t();
 function t()
 {
-    $CollStorepath = "db/col1";
+    $filename = "coll.json";
 
     $startms=getMillisecond();
+
    // echo $startms;
     //select from xxx where xxx
-    $rows = qry($CollStorepath, function ($jsonobj) {
+    $rows = qryOne($filename, function ($jsonobj) {
 
-        if ($jsonobj['game_id'] == '777')
+        if ($jsonobj['game_id'] == 99999)
             return true;
 
     });
@@ -102,21 +103,48 @@ function updt($obj, $coll_store_postn)
 }
 
 
+function qryOne($coll_store_postn, $whereFun)
+{
+    $arr = [];
+    //scan also ok..but need flt dir first..
+    //flob just flt auto
+    $jsonrows=json_decode(file_get_contents($coll_store_postn),true);
+
+    foreach ($jsonrows as $row) {
+//    if (is_file($file)) {  //判断是否是文件
+//        echo $file . ‘
+
+
+        if ($whereFun($row))
+        {
+            $arr[] = $row;
+             break;
+        }
+
+
+
+    }
+    return $arr;
+}
+
 function qry($coll_store_postn, $whereFun)
 {
     $arr = [];
     //scan also ok..but need flt dir first..
     //flob just flt auto
-    $files = glob($coll_store_postn . "/*.json"); //获取目录下的所有文件和文件夹，不包括子目录
+    $jsonrows=json_decode(file_get_contents($coll_store_postn),true);
 
-    foreach ($files as $file) {
+    foreach ($jsonrows as $row) {
 //    if (is_file($file)) {  //判断是否是文件
 //        echo $file . ‘
 
-        $txt = file_get_contents($file);
-        $jsonobj = json_decode($txt, true);
-        if ($whereFun($jsonobj))
-            $arr[] = $jsonobj;
+
+        if ($whereFun($row))
+        {
+            $arr[] = $row;
+            //break;
+        }
+
 
 
     }

@@ -9,3 +9,12 @@ then ok..
 
 
 
+#   exit 255
+
+
+err in  ini   (new \think\App())->console;
+
+should db conn err...chage .env db cfg
+
+or  extend/thirdparty   code miss,,,recopy just ok
+

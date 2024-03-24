@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 function array_replace_lastone(&$arr911, $lastball) {
   array_pop($arr911);
   array_push($arr911,$lastball);
@@ -87,6 +91,30 @@ function _testGrpby() {
 
 }
 
+
+//function grpbyV4($rows,   $grpbyColss, $funSlkt) {
+//
+//    $grpbyColName='cmbCols_'.join("_",$grpbyColss);
+//    $rows = array_map(function ($row) use ($grpbyColss,$grpbyColName) {
+//        $row[$grpbyColName] =join_cols_val($row,$grpbyColss) ;
+//        return $row;
+//
+//    }, $rows);
+//
+//
+//    $rets=[];
+//    $grpbyColVals=arr_col_uniq($rows,$grpbyColName);
+//
+//    foreach ($grpbyColVals as $grpbyColVal)
+//    {
+//        //  var_dump($grpbyColVal);
+//        $coll_whereGrpcol=array_where($rows,$grpbyColName,$grpbyColVal);
+//        $rets[]= $funSlkt($coll_whereGrpcol,$grpbyColVal);
+//    }
+//    return $rets;
+//
+//
+//}
 
 function grpbyV3($rows,   $grpbyColss, $funSlkt) {
 
@@ -221,6 +249,27 @@ function  arr_select($f,$rows) {
   return array_map($f,$rows);
 
 }
+//arr_flt_test();
+function arr_flt_test()
+{
+
+    $a=[];
+    for($i=0;$i<100;$i++)
+        {
+
+            var_dump($i);
+            $a[]=$i;
+        }
+
+    $b=array_filter($a,function ($row){
+           if($row>95)
+               return true;
+    });
+print_r($b);
+var_dump( json_encode($b));
+
+}
+
 
 function  arr_where($arr,$f) {
   return array_filter_where($arr,$f);
